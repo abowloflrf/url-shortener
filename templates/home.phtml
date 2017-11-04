@@ -8,6 +8,18 @@
 </head>
 <body>
     <h1>Home</h1>
-    <p><?=$data?></p>
+    <form action="/" method="post">
+        <input type="text" name="fullurl">
+        <button type="submit">生成短域名</button>
+    </form>
+    
+    <ul>
+    <?
+    foreach ($urls as $url)
+        {
+        echo '<li>' . $url['url_full'] . '</li>';
+    }
+    ?>
+    </ul>
 </body>
 </html>

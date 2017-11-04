@@ -25,7 +25,8 @@
             "Tests\\": "tests/"
         },
         "classmap": [
-            "src/Controllers"
+            "src/Controllers",
+            "src/Controllers/Utils"
         ]
     },
     "config": {
