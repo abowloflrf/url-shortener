@@ -6,18 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+<style>
+li b{
+    font-family:monospace;
+}
+</style>
 <body>
     <h1>Home</h1>
+    <!-- TODO: 这里使用ajax来post数据，回调后加入下面的list -->
     <form action="/" method="post">
         <input type="text" name="fullurl">
         <button type="submit">生成短域名</button>
     </form>
     
     <ul>
+    <!-- TODO: 这里显示最近添加的十条短域名 -->
     <?
     foreach ($urls as $url)
         {
-        echo '<li>' . $url['url_full'] . '</li>';
+        echo '<li>' . '<b>[' . $url['url_short'] . ']</b>&nbsp' . $url['url_full'] . '</li>';
     }
     ?>
     </ul>
