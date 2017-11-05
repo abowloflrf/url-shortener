@@ -47,7 +47,7 @@ class HomeController
             return json_encode(array(
                 'status' => 'success',
                 'id' => $id,
-                'url_s' => $shortened_url,
+                'url_s' => $this->container->get('settings')['domain'].$shortened_url,
                 'url_f' => $fullurl
             ));
         }

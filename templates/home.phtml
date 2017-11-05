@@ -4,29 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>简单的短域名服务</title>
+    <link href="https://cdn.bootcss.com/bulma/0.6.0/css/bulma.min.css" rel="stylesheet">
 </head>
 <style>
 li b{
     font-family:monospace;
 }
+#url-input{
+    width:500px;
+}
+input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  -webkit-text-fill-color: #333;
+}
+.form-section{
+    margin-top:200px;
+}
+.url-footer{
+    position:absolute;
+    bottom:10px;
+    left:50%;
+}
 </style>
 <body>
-    <h1>Home</h1>
-    <!-- TODO: 这里使用ajax来post数据，回调后加入下面的list -->
-    <form action="/" method="post">
-        <input type="text" name="fullurl">
-        <button type="submit">生成短域名</button>
-    </form>
-    
-    <ul>
-    <!-- TODO: 这里显示最近添加的十条短域名 -->
-    <?
-    foreach ($urls as $url)
-        {
-        echo '<li>' . '<b>[' . $url['url_short'] . ']</b>&nbsp' . $url['url_full'] . '</li>';
-    }
-    ?>
-    </ul>
+    <section class="hero is-primary is-bold">
+    <div class="hero-body">
+        <div class="container">
+        <h1 class="title">
+            简单的短域名服务
+        </h1>
+        </div>
+    </div>
+    </section>
+    <div class="container">
+        <div class="field has-addons has-addons-centered form-section">
+            <div class="control">
+                <input class="input is-medium" type="text" name="fullurl" id="url-input" spellcheck="false">
+                <p class="help is-danger url-info" style="display:none">请检查你输入的链接，如协议名是否正确</p>
+            </div>
+            <div class="control">
+                <button class="button is-primary is-medium" id="submit-btn">生成</button>
+            </div>
+        </div>
+    </div>
+    <div class="url-footer">
+    <a href="https://github.com/abowloflrf/url-shortener" target="_blank">Github</a>
+    </div>
+    <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js"></script>
+    <script src="https://cdn.bootcss.com/clipboard.js/1.7.1/clipboard.min.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

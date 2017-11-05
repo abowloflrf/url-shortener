@@ -21,6 +21,8 @@ return [
             'user'=>'root',
             'pass'=>'',
             'dbname'=>'url-shortener',
-        ]
+        ],
+        //
+        'domain'=>'http://localhost:8080/'
     ],
 ];
