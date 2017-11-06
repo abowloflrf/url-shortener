@@ -31,6 +31,7 @@ class UrlController
         //TODO: 统计点击量/refer
         $stmt->execute();
         $result = $stmt->fetch();
+        //跳转
         if ($result) {
             return $response->withRedirect($result['url_full'], 301);
         }

@@ -26,6 +26,14 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
     bottom:10px;
     left:50%;
 }
+@media screen and (max-width: 800px) { 
+    .form-section{
+        margin:200px 20px 0 20px;
+    }
+    #url-input{
+        width: auto;
+    }
+ }
 </style>
 <body>
     <section class="hero is-primary is-bold">
@@ -49,7 +57,7 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
         </div>
     </div>
     <div class="url-footer">
-    <a href="https://github.com/abowloflrf/url-shortener" target="_blank">Github</a>
+        <iframe src="https://ghbtns.com/github-btn.html?user=abowloflrf&repo=url-shortener&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
     </div>
     <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js"></script>
     <script src="https://cdn.bootcss.com/clipboard.js/1.7.1/clipboard.min.js"></script>
