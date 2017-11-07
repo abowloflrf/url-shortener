@@ -26,11 +26,12 @@ class UrlController
             ->write('404 Page not found');
         }
         //从数据库中查询完整域名并跳转
+        //也许sql语句可以优化一下。。。看点书再说
         $pdo = $this->container->get('db');
         $stmt = $pdo->prepare("SELECT url_full FROM url WHERE url_short ='" . $args['url'] . "'");
-        //TODO: 统计点击量/refer
         $stmt->execute();
         $result = $stmt->fetch();
+        $pdo->exec("UPDATE url SET click =click+1 WHERE url_short ='" . $args['url'] . "'");
         //跳转
         if ($result) {
             return $response->withRedirect($result['url_full'], 301);
