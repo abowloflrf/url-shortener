@@ -16,13 +16,24 @@ return [
             'level' => \Monolog\Logger::DEBUG,
         ],
         //db config
-        'db'=>[
-            'host'=>'127.0.0.1:3306',
-            'user'=>'root',
-            'pass'=>'',
-            'dbname'=>'url-shortener',
+        // 'db'=>[
+        //     'host'=>'127.0.0.1:3306',
+        //     'user'=>'root',
+        //     'pass'=>'',
+        //     'dbname'=>'url-shortener',
+        // ],
+        'db' => [
+            'driver' => 'mysql',
+            'host' => 'localhost',
+            'database' => 'url-shortener',
+            'username' => 'root',
+            'password' => '',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
         ],
         //
-        'domain'=>'http://localhost:8080/'
+        'domain'=>'http://localhost:8080/',
+        'salt'=>'urlshortener'
     ],
 ];

@@ -19,7 +19,7 @@ window.onload = function() {
                         var res = response.data
                         var btn = document.getElementById("submit-btn")
                         btn.classList.remove("is-loading")
-                        if (res.status === "success") {
+                        if (res.status === "SUCCESS") {
                             document.getElementById("url-input").value = res.url_s
                             btn.classList.remove("is-primary")
                             btn.classList.add("is-info")
@@ -32,7 +32,10 @@ window.onload = function() {
                                 }
                             })
                         } else {
-                            console.error(res.data)
+                            document.getElementsByClassName("url-info")[0].style.display = "block"
+                            document.getElementById("url-input").classList.add("is-danger")
+                            document.getElementById("url-input").focus()
+                            console.error(res.msg)
                         }
                     })
             }
