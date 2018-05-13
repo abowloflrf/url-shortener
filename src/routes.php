@@ -7,4 +7,5 @@ use Slim\Http\Response;
 
 $app->get('/','\App\Controller\HomeController:home');
 $app->post('/','\App\Controller\UrlController:create');
+$app->get('/t','\App\Controller\UrlController:test');
 $app->get('/{url}', '\App\Controller\UrlController:index');

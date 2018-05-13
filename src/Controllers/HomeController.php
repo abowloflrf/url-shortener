@@ -17,9 +17,9 @@ class HomeController
     public function home($request, $response, $args)
     {
         //显示最近十个url
-        $urls = $this->url->orderBy('created_at', 'desc')
-            ->take(5)
-            ->get();
+        // $urls = $this->url->orderBy('created_at', 'desc')
+        //     ->take(5)
+        //     ->get();
 
         $this->container->get('renderer')->render($response, 'home.phtml');
         return $response;
