@@ -39,7 +39,7 @@ class UrlController
             $result = $this->url->where('url_short', $args['url'])->first();
             if ($result) {
                 //click++
-                $this->url->where('key', $result->key)->update(['click' => $result->click + 1]);
+                //$this->url->where('key', $result->key)->update(['click' => $result->click + 1]);
                 //种缓存
                 $this->mc->set('url_' . $args['url'], $result->url_full);
                 //跳转到目标链接
@@ -65,7 +65,7 @@ class UrlController
         $result = $this->url->where('url_short', $args['url'])->first();
         if ($result) {
             //click++
-            $this->url->where('key', $result->key)->update(['click' => $result->click + 1]);
+            //$this->url->where('key', $result->key)->update(['click' => $result->click + 1]);
             //跳转到目标链接
             return $response->withRedirect($result->url_full, 301);
         }

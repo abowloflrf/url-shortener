@@ -1,6 +1,6 @@
 # URL Shortener 简单短链接实现
 
-使用 Slim Framework 与 Laravel Eloquent ORM 实现。使用[hashids](https://github.com/ivanakimov/hashids.)来生成 6 位的唯一短域名，其中 salt 在 settings.php 中可指定
+使用 Slim Framework 与 Laravel Eloquent ORM 实现。使用[hashids](https://github.com/ivanakimov/hashids.)来生成 6 位的唯一短域名，其中 salt 在 settings.php 中可指定。缓存使用了Memcached。
 
 输入域名必须带有协议名，支持`(http|ftp)s`
 
