@@ -26,7 +26,7 @@ window.onload = function() {
                             btn.innerText = "复制"
                             btn.removeEventListener("click", doSubmit)
                             //复制Clipboard.js
-                            new Clipboard("#submit-btn", {
+                            new ClipboardJS("#submit-btn", {
                                 text: function() {
                                     return res.url_s
                                 }

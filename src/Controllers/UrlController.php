@@ -20,7 +20,8 @@ class UrlController
         $this->mc = $this->container->get('memcached');
     }
 
-    public function index(Request $request, Response $response, array $args)
+    //使用Mamcached作为缓存
+    public function redirect(Request $request, Response $response, array $args)
     {
         //短域名格式不匹配，返回404
         if (!preg_match('/^[a-zA-Z0-9]{6}$/', $args['url'])) {
@@ -49,7 +50,29 @@ class UrlController
                 return $response->withRedirect('/', 301);
             }
         }
+    }
 
+    //不适用缓存，每次直接查询数据库作跳转，用作对比性能测试
+    public function redirectWithoutCache(Request $request, Response $response, array $args)
+    {
+        //短域名格式不匹配，返回404
+        if (!preg_match('/^[a-zA-Z0-9]{6}$/', $args['url'])) {
+            return $response->withStatus(404)
+                ->withHeader('Content-Type', 'text/html')
+                ->write('404 Page not found');
+        }
+        //从数据库中查询完整域名并跳转
+        $result = $this->url->where('url_short', $args['url'])->first();
+        if ($result) {
+            //click++
+            $this->url->where('key', $result->key)->update(['click' => $result->click + 1]);
+            //跳转到目标链接
+            return $response->withRedirect($result->url_full, 301);
+        }
+        //未查询到域名则跳转到首页
+        else {
+            return $response->withRedirect('/', 301);
+        }
     }
 
     public function create($request, $response, $args)
