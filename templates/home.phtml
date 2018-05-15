@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>简单的短域名服务</title>
-    <link href="https://cdn.bootcss.com/bulma/0.6.2/css/bulma.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bulma/0.7.1/css/bulma.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="/favicon.png" />
 </head>
 <style>
@@ -53,7 +53,7 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
         <div class="field has-addons has-addons-centered form-section">
             <div class="control">
                 <input class="input is-medium" type="text" name="fullurl" id="url-input" spellcheck="false">
-                <p class="help is-danger url-info" style="display:none">请检查你输入的链接，如协议名是否正确</p>
+                <p class="help is-danger url-info" id="err-msg" style="display:none">请检查你输入的链接，如协议名是否正确</p>
             </div>
             <div class="control">
                 <button class="button is-primary is-medium" id="submit-btn">生成</button>

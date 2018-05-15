@@ -32,7 +32,9 @@ window.onload = function() {
                                 }
                             })
                         } else {
-                            document.getElementsByClassName("url-info")[0].style.display = "block"
+                            var errInfo = document.getElementById('err-msg')
+                            errInfo.innerHTML = res.msg
+                            errInfo.style.display = "block"
                             document.getElementById("url-input").classList.add("is-danger")
                             document.getElementById("url-input").focus()
                             console.error(res.msg)

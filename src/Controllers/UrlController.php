@@ -83,13 +83,19 @@ class UrlController
         $fullurl = trim($body['fullurl'], " \t\n\r\0\x0B/");
         //只允许(http|ftp)s?协议，输入时需要添加
         if (!empty($fullurl) && preg_match('/^(http|ftp)s?:\/\//', $fullurl)) {
+            if (strpos($fullurl, $this->container->get('settings')['domain']) !== false) {
+                return json_encode(array(
+                    'status' => 'ERROR',
+                    'msg' => '请不要输入本网站地址'
+                ));
+            }
             //查找数据库，若url已存在
             $isExist = $this->url->where('url_full', $fullurl)->first();
             if ($isExist) {
                 return json_encode(array(
                     'status' => 'SUCCESS',
                     'id' => $isExist->key,
-                    'url_s' => $this->container->get('settings')['domain'] . $isExist->url_short,
+                    'url_s' => $this->container->get('settings')['domain'] . '/' . $isExist->url_short,
                     'url_f' => $isExist->url_full,
                     'is_new' => false
                 ));
@@ -98,7 +104,7 @@ class UrlController
         } else {
             return json_encode(array(
                 'status' => 'ERROR',
-                'msg' => 'Illegal url, please check your url again.'
+                'msg' => 'URL不合法，请重试'
             ));
         }
 
@@ -117,7 +123,7 @@ class UrlController
             return array(
                 'status' => 'SUCCESS',
                 'id' => $id,
-                'url_s' => $this->container->get('settings')['domain'] . $shortened_url,
+                'url_s' => $this->container->get('settings')['domain'] . '/' . $shortened_url,
                 'url_f' => $fullurl,
                 "is_new" => true
             );
