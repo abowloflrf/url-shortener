@@ -1,15 +1,19 @@
 {
-    "name": "slim/slim-skeleton",
-    "description":
-        "A Slim Framework skeleton application for rapid development",
-    "keywords": ["microframework", "rest", "router", "psr7"],
-    "homepage": "http://github.com/slimphp/Slim-Skeleton",
+    "name": "abowloflrf/",
+    "description": "A simple url shortener website using Slim-Framework, MySQL and Memcached",
+    "keywords": [
+        "url",
+        "slim-framework",
+        "mysql",
+        "memcached"
+    ],
+    "homepage": "https://github.com/abowloflrf/url-shortener",
     "license": "MIT",
     "authors": [
         {
-            "name": "Josh Lockhart",
-            "email": "info@joshlockhart.com",
-            "homepage": "http://www.joshlockhart.com/"
+            "name": "Ruofeng Lei",
+            "email": "i@ruofeng.me",
+            "homepage": "https://ruofeng.me"
         }
     ],
     "require": {
@@ -22,13 +26,14 @@
     },
     "require-dev": {},
     "autoload-dev": {
-        "classmap": ["src/Controllers"]
+        "classmap": [
+            "src/Controllers"
+        ]
     },
     "config": {
         "process-timeout": 0
     },
     "scripts": {
-        "start": "php -S 0.0.0.0:8080 -t public public/index.php",
-        "test": "phpunit"
+        "start": "php -S 127.0.0.1:8080 -t public public/index.php"
     }
 }

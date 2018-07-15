@@ -1,12 +1,10 @@
 CREATE TABLE `url` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`url_short` VARCHAR(6) NOT NULL DEFAULT '0' COLLATE 'utf8_bin',
-	`url_full` TEXT NULL COLLATE 'utf8_bin',
-	`click` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`url_short` VARCHAR(16) NOT NULL DEFAULT '0',
+	`url_full` TEXT NULL,
 	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `url_short` (`url_short`)
 )
-COLLATE='utf8_bin'
 ENGINE=InnoDB
 ;
