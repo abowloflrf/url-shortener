@@ -5,6 +5,7 @@ use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Hashids\Hashids;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class UrlController
 {
@@ -56,7 +57,7 @@ class UrlController
     public function redirectWithoutCache(Request $request, Response $response, array $args)
     {
         //短域名格式不匹配，返回404
-        if (!preg_match('/^[a-zA-Z0-9]{6}$/', $args['url'])) {
+        if (!preg_match('/^[a-zA-Z0-9]{6,}$/', $args['url'])) {
             return $response->withStatus(404)
                 ->withHeader('Content-Type', 'text/html')
                 ->write('404 Page not found');
@@ -89,18 +90,33 @@ class UrlController
                     'msg' => '请不要输入本网站地址'
                 ));
             }
-            //查找数据库，若url已存在
-            $isExist = $this->url->where('url_full', $fullurl)->first();
-            if ($isExist) {
+            //这里不再查询数据库长链接是否已存在，因为长连接并没有设置索引，数据过多时会降低性能
+            //且后续会增加用户统计功能，确保用户每次生成的短链接确实这个用户生成的单独为其统计数据
+            // $isExist = $this->url->where('url_full', $fullurl)->first();
+            // if ($isExist) {
+            //     return json_encode(array(
+            //         'status' => 'SUCCESS',
+            //         'id' => $isExist->key,
+            //         'url_s' => $this->container->get('settings')['domain'] . '/' . $isExist->url_short,
+            //         'url_f' => $isExist->url_full,
+            //         'is_new' => false
+            //     ));
+            // }
+            //$this->container->get('settings')['domain'] . '/' . $shortened_url
+            $shorturl = $this->newUrl($fullurl);
+
+            if ($shorturl != '0')
                 return json_encode(array(
-                    'status' => 'SUCCESS',
-                    'id' => $isExist->key,
-                    'url_s' => $this->container->get('settings')['domain'] . '/' . $isExist->url_short,
-                    'url_f' => $isExist->url_full,
-                    'is_new' => false
-                ));
-            }
-            return json_encode($this->newUrl($fullurl));
+                'status' => 'SUCCESS',
+                'hashid' => $shorturl,
+                'url_s' => $this->container->get('settings')['domain'] . '/' . $shorturl,
+                'url_f' => $fullurl
+            ));
+            else
+                return json_encode(array(
+                'status' => 'ERROR',
+                'msg' => '生成短链接失败'
+            ));
         } else {
             return json_encode(array(
                 'status' => 'ERROR',
@@ -112,27 +128,19 @@ class UrlController
 
     private function newUrl(string $fullurl)
     {
-        $id = $this->url->insertGetId([
-            'url_short' => 'notok',
-            'url_full' => $fullurl
-        ]);
+        //获取mysql下一个自增ID
+        $statement = DB::select("SHOW TABLE STATUS LIKE 'url'");
+        $nextId = $statement[0]->Auto_increment;
         //生成hash为短链接
         $hashids = new Hashids($this->container->get('settings')['salt'], 6, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-        $shortened_url = $hashids->encode($id);
-        if ($this->url->where('key', $id)->update(['url_short' => $shortened_url])) {
-            return array(
-                'status' => 'SUCCESS',
-                'id' => $id,
-                'url_s' => $this->container->get('settings')['domain'] . '/' . $shortened_url,
-                'url_f' => $fullurl,
-                "is_new" => true
-            );
-        } else {
-            return array(
-                'status' => 'ERROR',
-                'msg' => 'Insert failed.'
-            );
-        }
+        $shortened_url = $hashids->encode($nextId);
+        //插入记录
+        if ($this->url->insert([
+            'url_short' => $shortened_url,
+            'url_full' => $fullurl
+        ]))
+            return $shortened_url;
+        return "0";
     }
 
     public function test()
